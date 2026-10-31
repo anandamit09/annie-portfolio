@@ -19,15 +19,26 @@ export function ContactButton({ href = '#contact', label = 'Contact Me', classNa
   );
 }
 
-type ProjectButtonProps = { href: string; label?: string; projectName: string };
+type ProjectButtonProps = { href: string; label?: string; projectName: string; ink: string; accent: string };
 
-/** Outlined pill that opens a project's detail page. */
-export function ProjectButton({ href, label = 'Explore Project', projectName }: ProjectButtonProps) {
+/** Outlined pill that opens a project's detail page, in that project's colours. */
+export function ProjectButton({ href, label = 'Explore Project', projectName, ink, accent }: ProjectButtonProps) {
   return (
     <a
       href={href}
       aria-label={`${label}: ${projectName}`}
-      className="group inline-flex items-center gap-2 whitespace-nowrap rounded-full border-2 border-mist px-6 py-2.5 text-xs font-medium uppercase tracking-widest text-mist transition-colors duration-300 hover:border-blood hover:bg-blood hover:text-white sm:px-10 sm:py-3.5 sm:text-base"
+      className="group inline-flex items-center gap-2 whitespace-nowrap rounded-full border-2 px-5 py-2 text-[0.7rem] font-medium uppercase tracking-widest transition-colors duration-300 sm:px-9 sm:py-3.5 sm:text-base"
+      style={{ borderColor: ink, color: ink }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.borderColor = accent;
+        e.currentTarget.style.background = accent;
+        e.currentTarget.style.color = '#fff';
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.borderColor = ink;
+        e.currentTarget.style.background = 'transparent';
+        e.currentTarget.style.color = ink;
+      }}
     >
       {label}
       <ArrowUpRight aria-hidden className="h-4 w-4 transition-transform duration-300 group-hover:rotate-45" />

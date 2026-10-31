@@ -12,28 +12,57 @@ function ProjectCard({ project, index, progress }: { project: Project; index: nu
   const start = index / totalCards;
   const scale = useTransform(progress, [start, 1], [1, targetScale]);
   const [a, b, c] = project.card;
+  // Each card is painted in its own project's palette and typeface, so the
+  // index already reads as four different collections.
+  const t = project.theme;
 
   return (
     <div className="sticky top-24 flex h-[85vh] items-start justify-center md:top-32">
       <motion.article
         aria-labelledby={`card-${project.slug}`}
-        className="relative flex w-full max-w-6xl origin-top flex-col gap-4 rounded-[40px] border-2 border-mist bg-ink p-4 transition-shadow duration-500 hover:shadow-[0_0_0_1px_#9F0505,0_30px_80px_-30px_rgba(159,5,5,0.6)] sm:gap-6 sm:rounded-[50px] sm:p-6 md:rounded-[60px] md:p-8"
-        style={{ scale: reduce ? 1 : scale, top: `${index * 28}px` }}
+        className="relative flex w-full max-w-6xl origin-top flex-col gap-4 rounded-[40px] border-2 p-4 transition-shadow duration-500 sm:gap-6 sm:rounded-[50px] sm:p-6 md:rounded-[60px] md:p-8"
+        style={{
+          scale: reduce ? 1 : scale,
+          top: `${index * 28}px`,
+          background: t.bg,
+          borderColor: t.ink,
+          color: t.ink,
+          fontFamily: t.body,
+          boxShadow: `0 30px 80px -40px ${t.accent}`,
+        }}
       >
         {/* Top row */}
         <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-3 px-2 sm:px-3">
-          <div className="flex items-end gap-4 sm:gap-6">
-            <span aria-hidden className="text-gradient font-black leading-[0.8]" style={{ fontSize: 'clamp(3rem, 8vw, 110px)' }}>
+          <div className="flex items-end gap-3 sm:gap-6">
+            <span
+              aria-hidden
+              className="font-black leading-[0.8]"
+              style={{ fontSize: 'clamp(2.4rem, 8vw, 110px)', color: t.accent, opacity: 0.9, fontFamily: t.display }}
+            >
               {project.number}
             </span>
             <div className="flex flex-col gap-1 pb-1">
-              <span className="text-[0.65rem] font-medium uppercase tracking-[0.25em] text-blood sm:text-xs md:text-sm">{project.category}</span>
-              <h3 id={`card-${project.slug}`} className="font-bold uppercase leading-none tracking-tight text-mist" style={{ fontSize: 'clamp(1.5rem, 4vw, 3.4rem)' }}>
+              <span className="text-[0.6rem] font-medium uppercase tracking-[0.25em] sm:text-xs md:text-sm" style={{ color: t.accent }}>
+                {project.category}
+              </span>
+              <h3
+                id={`card-${project.slug}`}
+                className="leading-none"
+                style={{
+                  fontSize: 'clamp(1.3rem, 4vw, 3.2rem)',
+                  fontFamily: t.display,
+                  fontWeight: t.displayWeight,
+                  fontStyle: t.displayItalic ? 'italic' : 'normal',
+                  letterSpacing: t.displayTracking,
+                  textTransform: t.displayCase === 'upper' ? 'uppercase' : 'none',
+                  color: t.ink,
+                }}
+              >
                 {project.name}
               </h3>
             </div>
           </div>
-          <ProjectButton href={`#/project/${project.slug}`} projectName={project.name} />
+          <ProjectButton href={`#/project/${project.slug}`} projectName={project.name} ink={t.ink} accent={t.accent} />
         </div>
 
         {/* Bottom row */}
