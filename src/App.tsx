@@ -23,16 +23,45 @@ function useHash() {
   return hash;
 }
 
+/** Where the home page was last scrolled to, so leaving for a project and
+ *  coming back lands on the same card instead of the top of the section. */
+let homeScroll = 0;
+
 export default function App() {
   const hash = useHash();
   const slug = hash.startsWith('#/project/') ? hash.slice('#/project/'.length) : null;
   const project = slug ? projects.find((p) => p.slug === slug) : undefined;
+
+  // Remember the home scroll position while the home page is on screen.
+  useEffect(() => {
+    if (project) return;
+    const onScroll = () => {
+      homeScroll = window.scrollY;
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [project?.slug]);
 
   // Scroll handling when switching between pages / sections.
   useLayoutEffect(() => {
     if (project) {
       window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
       return;
+    }
+    // Returning from a project detail: go back to where we were.
+    if (homeScroll > 0) {
+      const target = homeScroll;
+      const restore = () => window.scrollTo({ top: target, behavior: 'instant' as ScrollBehavior });
+      restore();
+      // Images below the fold settle after a frame or two and can shift the
+      // page, so re-apply until the layout stops moving.
+      let frames = 0;
+      const tick = () => {
+        restore();
+        if (++frames < 12) raf = requestAnimationFrame(tick);
+      };
+      let raf = requestAnimationFrame(tick);
+      return () => cancelAnimationFrame(raf);
     }
     const id = hash.replace('#', '');
     if (id && !id.startsWith('/')) {

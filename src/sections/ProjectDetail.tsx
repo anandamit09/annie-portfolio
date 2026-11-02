@@ -2,7 +2,7 @@ import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { useInView } from 'framer-motion';
 import { useEffect, useRef } from 'react';
 import { projects, type Project, type Theme } from '../data/projects';
-import { chunks, type Chunk } from '../data/chunks';
+import { chunks, type Chunk, type ChunkEl } from '../data/chunks';
 
 /**
  * A project page is the portfolio itself: the source PDF cut into chunks and
@@ -24,9 +24,23 @@ function bandBackground(c: Chunk) {
   return c.left === c.right ? c.left : `linear-gradient(90deg, ${c.left} 0 50%, ${c.right} 50% 100%)`;
 }
 
+/**
+ * How far apart pieces of each kind start. The one-shot kinds read as a
+ * sequence; the endless ones just need their phases spread so a row of dots
+ * does not bob in lockstep.
+ */
+const STAGGER: Record<ChunkEl['kind'], number> = {
+  card: 60,
+  chip: 70,
+  dot: 140,
+  star: 320,
+  wave: 400,
+};
+
 function Band({ chunk, index, projectName }: { chunk: Chunk; index: number; projectName: string }) {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: '-12% 0px -12% 0px' });
+  // Not `once`: coming back to a section should bring it to life again.
+  const inView = useInView(ref, { margin: '-12% 0px -12% 0px' });
 
   return (
     <section style={{ background: bandBackground(chunk) }} aria-label={chunk.heading || `Page ${index + 1}`}>
@@ -44,7 +58,7 @@ function Band({ chunk, index, projectName }: { chunk: Chunk; index: number; proj
         {chunk.els.map((el, i) => (
           <img
             key={el.src}
-            className="el"
+            className={`el el--${el.kind} ${el.move ? 'el--move' : 'el--fixed'}`}
             src={el.src}
             alt=""
             aria-hidden
@@ -56,8 +70,7 @@ function Band({ chunk, index, projectName }: { chunk: Chunk; index: number; proj
               top: `${el.y}%`,
               width: `${el.w}%`,
               height: `${el.h}%`,
-              // 60ms apart so a group lands in sequence rather than all at once
-              animationDelay: `${Math.min(i * 60, 480)}ms`,
+              animationDelay: `${Math.min(i * STAGGER[el.kind], 900)}ms`,
             }}
           />
         ))}

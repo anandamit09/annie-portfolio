@@ -70,12 +70,28 @@ html {
 }
 
 /* ---------------------------------------------------------------------------
-   Elements cut out of a portfolio page.
+   Pieces cut out of a portfolio page.
 
-   Each one sits exactly on top of the pixels it came from, so at rest it is
-   invisible and the page is the PDF. Scale never drops below 1: the moment a
-   cutout is smaller than the original underneath it, you would see it double.
+   Each sits exactly over the artwork it came from. A piece marked `el--move`
+   was erased from the page underneath, so it is free to drift. An `el--fixed`
+   piece is still painted in the page, so it may only ever scale up — the
+   moment it moved or shrank you would see the original behind it.
+
+   All motion is transform-only and runs while the section is on screen, so
+   nothing off-screen is burning frames.
    --------------------------------------------------------------------------- */
+:root {
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.el {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+  transform: scale(1);
+}
+
+/* --- one-shot, as the section arrives --- */
 @keyframes el-pop {
   0% {
     transform: scale(1);
@@ -88,20 +104,112 @@ html {
   }
 }
 
-.el {
-  position: absolute;
-  /* The cutouts are decoration layered over the plate; the plate takes clicks. */
-  pointer-events: none;
-  user-select: none;
-  transform: scale(1);
+/* struck, like a key */
+@keyframes el-key {
+  0% {
+    transform: scale(1);
+  }
+  28% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
-[data-play='1'] .el {
-  animation: el-pop 620ms cubic-bezier(0.23, 1, 0.32, 1);
+[data-play='1'] .el--card,
+[data-play='1'] .el--dot.el--fixed {
+  animation: el-pop 620ms var(--ease-out);
+}
+
+[data-play='1'] .el--chip {
+  animation: el-key 460ms var(--ease-out);
+}
+
+/* --- ambient, while the section is in view --- */
+@keyframes el-twinkle {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+}
+
+@keyframes el-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+@keyframes el-wave {
+  0%,
+  100% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+}
+
+/* A line that is still painted underneath cannot slide, so it ripples in
+   place instead — scaling out never uncovers the copy below. */
+@keyframes el-ripple {
+  0%,
+  100% {
+    transform: scaleX(1);
+  }
+  50% {
+    transform: scaleX(1.03);
+  }
+}
+
+[data-play='1'] .el--star {
+  animation: el-twinkle 2400ms ease-in-out infinite;
+}
+
+[data-play='1'] .el--dot.el--move {
+  animation: el-float 3200ms ease-in-out infinite;
+}
+
+[data-play='1'] .el--wave.el--move {
+  animation: el-wave 3400ms ease-in-out infinite;
+}
+
+[data-play='1'] .el--wave.el--fixed {
+  animation: el-ripple 3000ms ease-in-out infinite;
+}
+
+/* --- lift the solid pieces under the cursor --- */
+@media (hover: hover) and (pointer: fine) {
+  .el--card,
+  .el--chip {
+    pointer-events: auto;
+    transition:
+      transform 200ms var(--ease-out),
+      filter 200ms var(--ease-out);
+  }
+
+  .el--card:hover,
+  .el--chip:hover {
+    transform: scale(1.045);
+    filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.3));
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   [data-play='1'] .el {
     animation: none;
+  }
+
+  .el--card:hover,
+  .el--chip:hover {
+    transform: scale(1);
+    filter: none;
   }
 }

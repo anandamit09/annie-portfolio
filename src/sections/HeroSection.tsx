@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import FadeIn from '../components/FadeIn';
 import Magnet from '../components/Magnet';
 import HeroCharacter from '../components/HeroCharacter';
@@ -19,29 +19,37 @@ const links = [
  */
 function useFitHeading() {
   const ref = useRef<HTMLHeadingElement>(null);
-  const [fit, setFit] = useState<number | null>(null);
   useLayoutEffect(() => {
     const el = ref.current;
     if (!el) return;
+    // The size lives on the element, not in state: a re-measure that lands on
+    // the same number must still re-apply it, or the heading stays unscaled.
     const measure = () => {
       el.style.fontSize = '';
-      const base = parseFloat(getComputedStyle(el).fontSize);
+      const style = getComputedStyle(el);
+      const base = parseFloat(style.fontSize);
       const range = document.createRange();
       range.selectNodeContents(el);
       const textWidth = range.getBoundingClientRect().width;
-      const available = el.clientWidth - parseFloat(getComputedStyle(el).paddingLeft) * 2;
-      setFit(textWidth > available ? Math.floor((base * available) / textWidth) : null);
+      const available = el.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+      if (textWidth > available) el.style.fontSize = `${Math.floor((base * available) / textWidth)}px`;
     };
     measure();
+    // Kanit Black is much wider than the fallback, so measure again once the
+    // real font (and any later face) has landed.
     document.fonts?.ready.then(measure);
+    document.fonts?.addEventListener('loadingdone', measure);
     window.addEventListener('resize', measure);
-    return () => window.removeEventListener('resize', measure);
+    return () => {
+      document.fonts?.removeEventListener('loadingdone', measure);
+      window.removeEventListener('resize', measure);
+    };
   }, []);
-  return { ref, fit };
+  return ref;
 }
 
 export default function HeroSection() {
-  const { ref: headingRef, fit } = useFitHeading();
+  const headingRef = useFitHeading();
   const sectionRef = useRef<HTMLElement>(null);
   return (
     <section ref={sectionRef} id="top" className="grain relative flex h-screen min-h-[560px] flex-col overflow-x-clip" aria-label="Introduction">
@@ -72,7 +80,6 @@ export default function HeroSection() {
           <h1
             ref={headingRef}
             className="text-gradient whitespace-nowrap px-[2vw] text-center text-[14vw] font-black uppercase leading-none tracking-tight sm:text-[15vw] md:text-[16vw] lg:text-[17.5vw]"
-            style={fit ? { fontSize: `${fit}px` } : undefined}
           >
             Hi, I'm Annie<span className="text-gradient-red">.</span>
           </h1>
