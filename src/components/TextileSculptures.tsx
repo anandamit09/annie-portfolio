@@ -39,7 +39,7 @@ export function YarnBall({ className }: P) {
             rx={84 - (i % 5) * 3}
             ry={18 + i * 4.6}
             transform={`rotate(${-38 + i * 7} 118 112)`}
-            stroke={i === 6 ? '#9F0505' : i % 2 ? 'rgba(255,255,255,0.32)' : 'rgba(0,0,0,0.35)'}
+            stroke={i === 6 ? '#A11E59' : i % 2 ? 'rgba(255,255,255,0.32)' : 'rgba(0,0,0,0.35)'}
             strokeWidth={i === 6 ? 3.2 : 1.6}
           />
         ))}
@@ -57,7 +57,7 @@ export function YarnBall({ className }: P) {
         ))}
       </g>
       <circle cx="118" cy="112" r="84" fill="url(#yb-shade)" />
-      <path d="M196 140 C 222 160, 214 196, 186 204 S 140 222, 120 236" stroke="#9F0505" strokeWidth="3.2" fill="none" strokeLinecap="round" />
+      <path d="M196 140 C 222 160, 214 196, 186 204 S 140 222, 120 236" stroke="#A11E59" strokeWidth="3.2" fill="none" strokeLinecap="round" />
       <ellipse cx="86" cy="70" rx="22" ry="12" fill="#fff" opacity="0.35" transform="rotate(-30 86 70)" filter="url(#yb-soft)" />
     </svg>
   );
@@ -77,7 +77,7 @@ export function ThreadSpool({ className }: P) {
         <linearGradient id="sp-thread" x1="0" x2="1">
           <stop offset="0%" stopColor="#2a0101" />
           <stop offset="38%" stopColor="#c21010" />
-          <stop offset="62%" stopColor="#9F0505" />
+          <stop offset="62%" stopColor="#A11E59" />
           <stop offset="100%" stopColor="#1a0000" />
         </linearGradient>
         <linearGradient id="sp-needle" x1="0" x2="1">
@@ -113,7 +113,7 @@ export function ThreadSpool({ className }: P) {
         <path d="M166 190 L169.5 214 L173 190 Z" fill="#cfd5da" />
         <rect x="168" y="6" width="3" height="16" rx="1.5" fill="#0c0c0c" />
       </g>
-      <path d="M170 132 C 210 118, 226 72, 196 40 S 150 20, 172 4" stroke="#9F0505" strokeWidth="2.6" fill="none" strokeLinecap="round" />
+      <path d="M170 132 C 210 118, 226 72, 196 40 S 150 20, 172 4" stroke="#A11E59" strokeWidth="2.6" fill="none" strokeLinecap="round" />
     </svg>
   );
 }
@@ -136,7 +136,7 @@ export function TextileFlower({ className }: P) {
         </radialGradient>
         <radialGradient id="fl-core" cx="40%" cy="35%" r="70%">
           <stop offset="0%" stopColor="#e01818" />
-          <stop offset="60%" stopColor="#9F0505" />
+          <stop offset="60%" stopColor="#A11E59" />
           <stop offset="100%" stopColor="#300000" />
         </radialGradient>
         <filter id="fl-soft" x="-50%" y="-50%" width="200%" height="200%">
@@ -199,11 +199,11 @@ export function FoldedFabric({ className }: P) {
         </linearGradient>
         <linearGradient id="ff-red" x1="0" x2="1">
           <stop offset="0%" stopColor="#3a0202" />
-          <stop offset="18%" stopColor="#9F0505" />
+          <stop offset="18%" stopColor="#A11E59" />
           <stop offset="34%" stopColor="#4a0202" />
           <stop offset="50%" stopColor="#c51212" />
           <stop offset="66%" stopColor="#4a0202" />
-          <stop offset="82%" stopColor="#9F0505" />
+          <stop offset="82%" stopColor="#A11E59" />
           <stop offset="100%" stopColor="#2a0101" />
         </linearGradient>
         <filter id="ff-soft" x="-50%" y="-50%" width="200%" height="200%">
@@ -223,7 +223,7 @@ export function FoldedFabric({ className }: P) {
         <path d="M20 150 Q 52 132 84 150 T 148 150 T 212 150 T 240 142 L 240 160 Q 212 180 180 160 T 116 160 T 52 160 T 20 168 Z" fill="url(#ff-red)" />
         <path d="M20 40 Q 52 20 84 40 T 148 40 T 212 40 T 240 32" stroke="rgba(255,255,255,0.6)" strokeWidth="1.4" fill="none" />
         {Array.from({ length: 9 }, (_, i) => (
-          <path key={i} d={`M${26 + i * 26} 168 l -2 14`} stroke="#9F0505" strokeWidth="1.6" strokeLinecap="round" />
+          <path key={i} d={`M${26 + i * 26} 168 l -2 14`} stroke="#A11E59" strokeWidth="1.6" strokeLinecap="round" />
         ))}
       </g>
     </svg>

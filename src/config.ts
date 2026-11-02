@@ -21,7 +21,7 @@ export const site = {
     { label: 'Behance', url: '' },
   ],
 
-  /** Hero character: illustrated portrait with transparent background (cut out from the cartoon portrait). */
-  heroImage: 'images/hero/annie-cartoon.webp',
+  /** Hero portrait: photo cut out onto a transparent background. */
+  heroImage: 'images/hero/annie-photo.webp',
   heroImageIsPlaceholder: false,
 };

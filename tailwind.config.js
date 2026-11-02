@@ -6,11 +6,18 @@ export default {
       fontFamily: {
         sans: ['Kanit', 'sans-serif'],
       },
+      /* Berry & Bone — drawn from the four project palettes so the shell and
+         the work read as one collection. `woad` and `rust` are the secondary
+         accents (Gramin's indigo, Postscript's brick). */
       colors: {
-        ink: '#0C0C0C',
-        mist: '#D7E2EA',
-        blood: '#9F0505',
-        surface: '#151515',
+        bone: '#F7F1E6',
+        cream: '#EFE6D9',
+        ink: '#1C1A17',
+        night: '#141017',
+        surface: '#1F1A24',
+        berry: '#A11E59',
+        woad: '#1B344D',
+        rust: '#BC2E1F',
       },
     },
   },

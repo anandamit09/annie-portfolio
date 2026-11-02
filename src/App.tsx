@@ -74,7 +74,7 @@ export default function App() {
   if (project) return <ProjectDetail project={project} />;
 
   return (
-    <main className="overflow-x-clip bg-ink">
+    <main className="overflow-x-clip bg-bone">
       <HeroSection />
       <MarqueeSection />
       <AboutSection />

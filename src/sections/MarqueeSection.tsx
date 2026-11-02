@@ -7,7 +7,7 @@ function Row({ images, rowRef }: { images: Img[]; rowRef: React.RefObject<HTMLDi
   return (
     <div ref={rowRef} className="flex w-max gap-3" style={{ willChange: 'transform' }}>
       {doubled.map((img, idx) => (
-        <div key={idx} className="h-[170px] w-[264px] shrink-0 overflow-hidden rounded-2xl bg-surface sm:h-[220px] sm:w-[342px] md:h-[270px] md:w-[420px]">
+        <div key={idx} className="h-[170px] w-[264px] shrink-0 overflow-hidden rounded-2xl bg-cream sm:h-[220px] sm:w-[342px] md:h-[270px] md:w-[420px]">
           <img
             src={img.src}
             alt={idx < images.length ? img.alt : ''}
@@ -56,7 +56,7 @@ export default function MarqueeSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} aria-label="Portfolio imagery" className="overflow-x-clip bg-ink pb-10 pt-24 sm:pt-32 md:pt-40">
+    <section ref={sectionRef} aria-label="Portfolio imagery" className="overflow-x-clip bg-bone pb-10 pt-24 sm:pt-32 md:pt-40">
       <div className="flex flex-col gap-3">
         <Row images={marqueeRowOne} rowRef={rowOne} />
         <Row images={marqueeRowTwo} rowRef={rowTwo} />

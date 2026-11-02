@@ -85,12 +85,12 @@ export default function ProjectsSection() {
   const { scrollYProgress } = useScroll({ target: container, offset: ['start start', 'end end'] });
 
   return (
-    <section id="projects" className="relative z-10 -mt-10 rounded-t-[40px] bg-ink px-4 pb-24 pt-20 sm:-mt-12 sm:rounded-t-[50px] sm:px-8 sm:pt-24 md:-mt-14 md:rounded-t-[60px] md:px-10 md:pt-32">
+    <section id="projects" className="relative z-10 -mt-10 rounded-t-[40px] bg-night px-4 pb-24 pt-20 sm:-mt-12 sm:rounded-t-[50px] sm:px-8 sm:pt-24 md:-mt-14 md:rounded-t-[60px] md:px-10 md:pt-32">
       <FadeIn y={40}>
         <h2 className="text-gradient mb-12 text-center font-black uppercase leading-[0.9] tracking-tight sm:mb-16 md:mb-20" style={{ fontSize: 'clamp(2.6rem, 10vw, 150px)' }}>
           Selected
           <br />
-          projects<span className="text-gradient-red">.</span>
+          projects<span className="text-gradient-berry">.</span>
         </h2>
       </FadeIn>
 

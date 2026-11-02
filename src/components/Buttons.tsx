@@ -2,14 +2,14 @@ import { ArrowUpRight } from 'lucide-react';
 
 type ContactButtonProps = { href?: string; label?: string; className?: string };
 
-/** Dark → deep-red pill with white offset outline. Scrolls to the contact section by default. */
+/** Night → berry pill with a bone offset outline. Scrolls to the contact section by default. */
 export function ContactButton({ href = '#contact', label = 'Contact Me', className = '' }: ContactButtonProps) {
   return (
     <a
       href={href}
-      className={`group relative inline-flex items-center gap-2 whitespace-nowrap rounded-full px-8 py-3 text-xs font-medium uppercase tracking-widest text-white outline outline-2 outline-offset-[-3px] outline-white transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_12px_40px_-12px_rgba(159,5,5,0.9)] sm:px-10 sm:py-3.5 sm:text-sm md:px-12 md:py-4 md:text-base ${className}`}
+      className={`group relative inline-flex items-center gap-2 whitespace-nowrap rounded-full px-8 py-3 text-xs font-medium uppercase tracking-widest text-bone outline outline-2 outline-offset-[-3px] outline-bone transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_12px_40px_-12px_rgba(161,30,89,0.9)] sm:px-10 sm:py-3.5 sm:text-sm md:px-12 md:py-4 md:text-base ${className}`}
       style={{
-        background: 'linear-gradient(110deg, #0C0C0C 0%, #3a0303 45%, #9F0505 100%)',
+        background: 'linear-gradient(110deg, #141017 0%, #4a0e2a 45%, #A11E59 100%)',
         boxShadow: 'inset 0 2px 10px rgba(255,255,255,0.12), inset 0 -6px 14px rgba(0,0,0,0.45)',
       }}
     >

@@ -8,7 +8,7 @@ const ABOUT =
 
 export default function AboutSection() {
   return (
-    <section id="about" className="relative flex min-h-screen items-center justify-center overflow-x-clip bg-ink px-5 py-20 sm:px-8 md:px-10">
+    <section id="about" className="relative flex min-h-screen items-center justify-center overflow-x-clip bg-bone px-5 py-20 sm:px-8 md:px-10">
       <FadeIn delay={0.1} x={-80} y={0} duration={0.9} className="pointer-events-none absolute left-[1%] top-[4%] w-[120px] sm:left-[2%] sm:w-[160px] md:left-[4%] md:w-[210px]">
         <YarnBall className="h-auto w-full" />
       </FadeIn>
@@ -25,13 +25,13 @@ export default function AboutSection() {
       <div className="relative z-10 flex flex-col items-center gap-16 sm:gap-20 md:gap-24">
         <div className="flex flex-col items-center gap-10 sm:gap-14 md:gap-16">
           <FadeIn delay={0} y={40}>
-            <h2 className="text-gradient text-center font-black uppercase leading-none tracking-tight" style={{ fontSize: 'clamp(3rem, 12vw, 160px)' }}>
+            <h2 className="text-gradient-ink text-center font-black uppercase leading-none tracking-tight" style={{ fontSize: 'clamp(3rem, 12vw, 160px)' }}>
               About me
             </h2>
           </FadeIn>
           <AnimatedText
             text={ABOUT}
-            className="max-w-[560px] text-center font-medium leading-relaxed text-mist"
+            className="max-w-[560px] text-center font-medium leading-relaxed text-ink/80"
             style={{ fontSize: 'clamp(1rem, 2vw, 1.35rem)' }}
           />
         </div>

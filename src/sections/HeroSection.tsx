@@ -1,9 +1,11 @@
 import { useLayoutEffect, useRef } from 'react';
 import FadeIn from '../components/FadeIn';
 import Magnet from '../components/Magnet';
-import HeroCharacter from '../components/HeroCharacter';
 import { ContactButton } from '../components/Buttons';
 import { site } from '../config';
+
+/** Soft fade at the waist so the cut-off edge dissolves into the page. */
+const PORTRAIT_FADE = 'linear-gradient(to bottom, #000 78%, transparent 100%)';
 
 const links = [
   { label: 'About', href: '#about' },
@@ -50,23 +52,15 @@ function useFitHeading() {
 
 export default function HeroSection() {
   const headingRef = useFitHeading();
-  const sectionRef = useRef<HTMLElement>(null);
   return (
-    <section ref={sectionRef} id="top" className="grain relative flex h-screen min-h-[560px] flex-col overflow-x-clip" aria-label="Introduction">
-      {/* soft red glow behind the character */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute left-1/2 top-[55%] h-[70vh] w-[70vh] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-30 blur-3xl"
-        style={{ background: 'radial-gradient(circle, rgba(159,5,5,0.35) 0%, rgba(159,5,5,0) 65%)' }}
-      />
-
+    <section id="top" className="relative flex h-screen min-h-[560px] flex-col overflow-x-clip" aria-label="Introduction">
       <FadeIn as="nav" delay={0} y={-20} className="relative z-20" aria-label="Primary">
-        <ul className="flex justify-between px-6 pt-6 text-sm font-medium uppercase tracking-wider text-mist md:px-10 md:pt-8 md:text-lg lg:text-[1.4rem]">
+        <ul className="flex justify-between px-6 pt-6 text-sm font-medium uppercase tracking-wider text-ink md:px-10 md:pt-8 md:text-lg lg:text-[1.4rem]">
           {links.map((l) => (
             <li key={l.href}>
               <a
                 href={l.href}
-                className="relative pb-1 transition-opacity duration-200 hover:opacity-70 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-blood after:transition-all after:duration-300 hover:after:w-full"
+                className="relative pb-1 transition-opacity duration-200 hover:opacity-70 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-berry after:transition-all after:duration-300 hover:after:w-full"
               >
                 {l.label}
               </a>
@@ -79,29 +73,30 @@ export default function HeroSection() {
         <FadeIn delay={0.15} y={40}>
           <h1
             ref={headingRef}
-            className="text-gradient whitespace-nowrap px-[2vw] text-center text-[14vw] font-black uppercase leading-none tracking-tight sm:text-[15vw] md:text-[16vw] lg:text-[17.5vw]"
+            className="text-gradient-ink whitespace-nowrap px-[2vw] text-center text-[14vw] font-black uppercase leading-none tracking-tight sm:text-[15vw] md:text-[16vw] lg:text-[17.5vw]"
           >
-            Hi, I'm Annie<span className="text-gradient-red">.</span>
+            Hi, I'm Annie<span className="text-gradient-berry">.</span>
           </h1>
         </FadeIn>
       </div>
 
-      {/* Cursor-reactive character */}
+      {/* Portrait. It sits still — only the entrance fade moves it. */}
       <div className="absolute left-1/2 top-1/2 z-10 w-[280px] -translate-x-1/2 -translate-y-1/2 sm:bottom-0 sm:top-auto sm:w-[340px] sm:translate-y-0 md:w-[440px] lg:w-[520px]" style={{ maxHeight: '72vh' }}>
         <FadeIn delay={0.6} y={30}>
-          <HeroCharacter
-            areaRef={sectionRef}
+          <img
             src={site.heroImage}
-            alt={site.heroImageIsPlaceholder ? 'Placeholder for Annie’s illustrated portrait' : 'Illustrated portrait of Annie (Ananya Raj)'}
-            padding={150}
-            strength={3}
+            alt={site.heroImageIsPlaceholder ? 'Placeholder for Annie’s portrait' : 'Portrait of Annie (Ananya Raj)'}
+            draggable={false}
+            fetchPriority="high"
+            className="pointer-events-none mx-auto h-auto max-h-[72vh] w-full select-none object-contain object-bottom"
+            style={{ WebkitMaskImage: PORTRAIT_FADE, maskImage: PORTRAIT_FADE }}
           />
         </FadeIn>
       </div>
 
       <div className="relative z-20 mt-auto flex items-end justify-between gap-4 px-6 pb-7 sm:pb-8 md:px-10 md:pb-10">
         <FadeIn delay={0.35} y={20}>
-          <p className="max-w-[160px] font-light uppercase leading-snug tracking-wide text-mist sm:max-w-[200px] md:max-w-[200px] lg:max-w-[300px]" style={{ fontSize: 'clamp(0.75rem, 1.4vw, 1.5rem)', textShadow: '0 1px 12px rgba(0,0,0,0.9)' }}>
+          <p className="max-w-[160px] font-light uppercase leading-snug tracking-wide text-ink/75 sm:max-w-[200px] md:max-w-[200px] lg:max-w-[300px]" style={{ fontSize: 'clamp(0.75rem, 1.4vw, 1.5rem)', textShadow: '0 1px 12px rgba(247,241,230,0.9)' }}>
             Textile designer exploring print, weave, surface &amp; storytelling.
           </p>
         </FadeIn>

@@ -102,7 +102,7 @@ export default function ProjectDetail({ project }: { project: Project }) {
   useEffect(() => {
     document.title = `${project.name} — Annie, Textile Designer`;
     const meta = document.querySelector('meta[name="theme-color"]');
-    const previous = meta?.getAttribute('content') ?? '#0C0C0C';
+    const previous = meta?.getAttribute('content') ?? '#F7F1E6';
     meta?.setAttribute('content', pages[0]?.left ?? t.themeColor);
     return () => {
       document.title = 'Annie — Textile Designer';
